@@ -1,0 +1,75 @@
+
+"""Version plus polie pour la lettre de motivation"""
+
+def afficher_plateau(plateau):
+    """Affiche le plateau de jeu"""
+    for ligne in plateau:
+        affichage = ""
+        for case in ligne:
+            affichage += case + "|"
+        print(affichage[:-1])
+        print("-" * 5)
+
+
+def verifier_victoire_ligne(plateau, symbole):
+    """Vérifie s'il y a une victoire pour le symbole donné sur une ligne"""
+    for ligne in plateau:
+        if ligne[0] == symbole and ligne[1] == symbole and ligne[2] == symbole:
+            return True
+    return False
+
+
+def verifier_victoire_colonne(plateau, symbole):
+    """Vérifie s'il y a une victoire pour le symbole donné sur une colonne"""
+    for colonne in range(3):
+        if plateau[0][colonne] == symbole and plateau[1][colonne] == symbole and plateau[2][colonne] == symbole:
+            return True
+    return False
+
+
+def verifier_victoire_diagonale(plateau, symbole):
+    """Vérifie s'il y a une victoire pour le symbole donné sur une diagonale"""
+    if plateau[0][0] == symbole and plateau[1][1] == symbole and plateau[2][2] == symbole:
+        return True
+    if plateau[0][2] == symbole and plateau[1][1] == symbole and plateau[2][0] == symbole:
+        return True
+    return False
+
+
+def verifier_victoire(plateau, symbole):
+    """Vérifie s'il y a une victoire pour le symbole donné"""
+    return (verifier_victoire_ligne(plateau, symbole) or
+            verifier_victoire_colonne(plateau, symbole) or
+            verifier_victoire_diagonale(plateau, symbole))
+
+
+def jouer_tic_tac_toe():
+    plateau = [[" "]*3 for _ in range(3)]
+    symboles = ["X", "O"]
+    joueur = 0
+    tour = 0
+
+    while tour < 9:
+        afficher_plateau(plateau)
+        print(f"Joueur {symboles[joueur]}, à vous de jouer.")
+
+        ligne = int(input("Ligne (0, 1 ou 2): "))
+        colonne = int(input("Colonne (0, 1 ou 2): "))
+
+        if plateau[ligne][colonne] == " ":
+            plateau[ligne][colonne] = symboles[joueur]
+            tour += 1
+
+            if verifier_victoire(plateau, symboles[joueur]):
+                afficher_plateau(plateau)
+                print(f"Victoire du joueur {symboles[joueur]} !")
+                return
+
+            joueur = 1 - joueur
+        else:
+            print("Cette case est déjà occupée.")
+
+    afficher_plateau(plateau)
+    print("Match nul")
+
+jouer_tic_tac_toe()

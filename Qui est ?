@@ -1,0 +1,113 @@
+
+"""jeu de qui est ? marche pas pour l'instant"""
+
+import random, time
+import os
+
+
+liste_perso = [
+    {'Prenom': 'Alex' , 'Sexe':'Homme' , 'Pas moustache': 'Moustache', 'Cheveux' : 'Cheveux noirs', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Alfred' , 'Sexe':'Homme' , 'Moustache': 'Moustache', 'Cheveux' : 'Cheveux roux', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Anita' , 'Sexe':'Femme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blonds', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Anne' , 'Sexe':'Femme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux noirs', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Bernard' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux bruns', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Susan' , 'Sexe':'Femme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blancs', 
+    'Lunettes' : 'Lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'}, 
+    {'Prenom': 'Peter' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blancs', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Bill' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux roux', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Barbe', 'Dégarni' : 'Dégarni'},
+    {'Prenom': 'Maria' , 'Sexe':'Femme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux bruns', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Eric' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blonds', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Frans' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux roux', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Charles' , 'Sexe':'Homme' , 'Moustache': 'Moustache', 'Cheveux' : 'Cheveux blonds', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Herman' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux roux', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Dégarni'},
+    {'Prenom': 'George' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blancs', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Claire' , 'Sexe':'Femme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux roux', 
+    'Lunettes' : 'Lunettes', 'Chapeau' : 'Chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Max' , 'Sexe':'Homme' , 'Moustache': 'Moustache', 'Cheveux' : 'Cheveux noirs', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Paul' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blancs', 
+    'Lunettes' : 'Lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Joe' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blonds', 
+    'Lunettes' : 'Lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'David' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blonds', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Richard' , 'Sexe':'Homme' , 'Moustache': 'Moustache', 'Cheveux' : 'Cheveux bruns', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Barbe', 'Dégarni' : 'Dégarni'},
+    {'Prenom': 'Robert' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux bruns', 
+    'Lunettes' : 'Pas lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Pas dégarni'},
+    {'Prenom': 'Sam' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux blancs', 
+    'Lunettes' : 'Lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Dégarni'}, 
+    {'Prenom': 'Tom' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux noirs', 
+    'Lunettes' : 'Lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Pas barbe', 'Dégarni' : 'Dégarni'},
+    {'Prenom': 'Philip' , 'Sexe':'Homme' , 'Moustache': 'Pas moustache', 'Cheveux' : 'Cheveux noirs', 
+    'Lunettes' : 'Lunettes', 'Chapeau' : 'Pas chapeau', 'Barbe' : 'Barbe', 'Dégarni' : 'Pas dégarni'}]   
+    
+
+
+def affiche(liste_perso) :
+    for perso in liste_perso :
+        print(f"{perso['Prenom']} : ".rjust(15), end='')
+        for item in list(perso.values())[1:] :
+            print(f"{item}".ljust(15), end='\t')
+        print()
+        
+        
+def choix_ordi():
+    return(random.choice(liste_perso))
+    
+def rep_ordi(choix_ordi,choix_joueur):
+    choix=choix_ordi()
+    if choix_joueur in choix.values():
+        return('oui')
+    else:
+        return('non')
+        
+def actualiser(carac,rep):
+    cop_liste=liste_perso.copy()
+    for perso in cop_liste:
+        if rep == 'non' and carac in perso.values():
+            liste_perso.remove(perso)
+        elif rep == 'oui' and carac not in perso.values():
+            liste_perso.remove(perso)
+    
+
+
+def jeu():
+    continuer = True
+    tour = 1
+    choix_ordit = choix_ordi()
+    while continuer == True :
+        os.system('cls')   #Permet d'effacer l'écran en mode console externe
+        affiche(liste_perso)
+        
+        question = input(f"Saisir un mot-clé ou proposer un prénom (essais {tour}/6): ")
+        if question == choix_ordit['Prenom'] :
+            print(f"Bravo, vous avez trouvé le bon personnage en {tour} essais! ")
+            continuer = False  #Le personnage a été trouvé et le jeu se termine
+        else :
+            rep = rep_ordi(choix_ordi, question)  #Réponse de l'ordi à la question du joueur
+            actualiser(question, rep)
+            print()
+            time.sleep(2)
+            tour += 1
+        if tour > 6 :
+            print("Désolé, vous n'avez pas trouvé mon personnage !")
+            print("Il s'agissait de", choix_ordit['Prenom'] )
+            continuer = False #Le personnage n'a pas été trouvé mais on a dépassé le nombre de tours
+    os.system("pause")  #Permet de ne pas fermer le jeu tout de suite en mode console externe
+
+
+jeu()
